@@ -1,7 +1,7 @@
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from five_homework.pages.LoginPage import LoginAdminPage
+from five_homework.page_objets.LoginPage import LoginAdminPage
 
 
 def test_check_admin_page_elements(browser):

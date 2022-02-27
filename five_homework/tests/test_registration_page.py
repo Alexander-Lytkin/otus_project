@@ -1,7 +1,7 @@
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from five_homework.pages.RegistrationPage import RegistrationPage
+from five_homework.page_objets.RegistrationPage import RegistrationPage
 
 
 def test_check_registration_page_elements(browser):

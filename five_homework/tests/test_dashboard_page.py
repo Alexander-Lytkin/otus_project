@@ -1,7 +1,7 @@
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from five_homework.pages.DashboardPage import DashboardPage
+from five_homework.page_objets.DashboardPage import DashboardPage
 
 
 def test_check_dashboard_page_elements(browser):
