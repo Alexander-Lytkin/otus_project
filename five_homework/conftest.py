@@ -9,7 +9,7 @@ import mysql.connector
 
 def pytest_addoption(parser):
     parser.addoption("--browser", default="chrome")
-    parser.addoption("--url", default="https://demo.opencart.com/")
+    parser.addoption("--url", default="https://demo.opencart.com")
     parser.addoption("--drivers", action="store",
                      default=os.path.expanduser("~/PycharmProjects/OTUS/otus_project/five_homework/drivers"))
 

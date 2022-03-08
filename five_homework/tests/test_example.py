@@ -1,6 +1,25 @@
+import time
+
+from five_homework.page_objets.AdminPage import AdminPage
 from five_homework.page_objets.MainPage import MainPage
 from five_homework.page_objets.RegistrationPage import RegistrationPage
 from five_homework.page_objets.elements.SuccessLogin import SuccessRegistrationPage
+
+
+# Добавление нового товара в разделе администратора.
+# Удаление товара из списка в разделе администартора.
+
+def test_add_new_item(browser):
+    admin_page = AdminPage(browser)
+    admin_page.open_admin_page()
+    admin_page.login()
+    # browser.get(browser.url + "/admin/")
+
+    pass
+
+
+def test_remove_item(browser):
+    pass
 
 
 def test_registration_new_account(browser):
@@ -15,9 +34,5 @@ def test_registration_new_account(browser):
 
 def test_change_currency(browser):
     main_page = MainPage(browser)
-    # main_page.find_currency()
-    main_page.choose_currency("Euro")
-# Регистрация нового пользователя в магазине опенкарта.+
-# Добавление нового товара в разделе администратора.
-# Удаление товара из списка в разделе администартора.
-# Переключение валют из верхнего меню опенкарта.
+    main_page.choose_currency("€ Euro")
+    assert main_page.current_currency.text == "€ Currency "
