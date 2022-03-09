@@ -7,7 +7,6 @@ jsonschema~=4.4.0
 selenium==4.1.0
 mysql-connector-python==8.0.22
 names==0.3.0
-
 numpy~=1.22.0
 password~=0.2
 phone~=0.4.3

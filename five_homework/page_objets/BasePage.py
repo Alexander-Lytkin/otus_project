@@ -38,3 +38,6 @@ class BasePage:
     def _click_in_element(self, element, locator: tuple, index: int = 0):
         element = element.find_elements(*locator)[index]
         self._click_element(element)
+
+    def accept_alert(self):
+        self.browser.switch_to.alert.accept()
