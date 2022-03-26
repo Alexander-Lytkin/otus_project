@@ -1,8 +1,11 @@
-from five_homework.page_objets.MainPage import MainPage
+import allure
+
+from seven_homework.page_objets.MainPage import MainPage
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 
+@allure.title("Проверка наличия элементов главной страницы")
 def test_check_main_page_elements(browser):
     browser.get(browser.url)
     wait = WebDriverWait(browser, 5)

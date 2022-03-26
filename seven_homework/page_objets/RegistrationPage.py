@@ -1,7 +1,8 @@
+import allure
 from selenium.webdriver.common.by import By
 
-from five_homework.common.random import *
-from five_homework.page_objets.BasePage import BasePage
+from seven_homework.common.random import *
+from seven_homework.page_objets.BasePage import BasePage
 
 
 class RegistrationPage(BasePage):
@@ -21,10 +22,12 @@ class RegistrationPage(BasePage):
         super().__init__(browser)
         self.browser = browser
         self.password = password
-
+    
+    @allure.step
     def open_registration_card(self):
         return self.browser.get(self.browser.url + self.REGISTRATION_API)
 
+    @allure.step
     def input_registration_fields(self):
         data = {
             "firstname": random_first_name(),
@@ -46,12 +49,15 @@ class RegistrationPage(BasePage):
                 element.send_keys(self.password)
             else:
                 element.send_keys(key)
-
+    
+    @allure.step
     def agree_policy(self):
         self._click(self.PRIVACY_POLICY)
-
+    
+    @allure.step
     def press_submit_button(self):
         self._click(self.SUBMIT_BUTTON)
-
+    
+    @allure.step
     def check_success_registration_account(self):
         self._verify_element_presence(self.CREATED_ACCOUNT_TITLE)

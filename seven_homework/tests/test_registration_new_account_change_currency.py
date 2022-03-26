@@ -1,9 +1,9 @@
-from five_homework.page_objets.ProductCard import ProductCard
+import allure
+
+from seven_homework.page_objets.ProductCard import ProductCard
 
 
-# Добавление нового товара в разделе администратора.
-# Удаление товара из списка в разделе администратора.
-
+@allure.title("Добавление нового товара в разделе администратора.")
 def test_add_new_item(browser, admin_page):
     admin_page.choose_product_catalog()
     admin_page.create_new_product()
@@ -15,6 +15,7 @@ def test_add_new_item(browser, admin_page):
     assert admin_page.check_alert_text == "Success: You have modified products!"
 
 
+@allure.title("Удаление товара из списка в разделе администратора")
 def test_remove_product(browser, admin_page):
     admin_page.choose_product_catalog()
     admin_page.find_created_product()
