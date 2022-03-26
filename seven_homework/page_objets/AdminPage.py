@@ -1,6 +1,7 @@
+import allure
 from selenium.webdriver.common.by import By
 
-from five_homework.page_objets.BasePage import BasePage
+from seven_homework.page_objets.BasePage import BasePage
 
 
 class AdminPage(BasePage):
@@ -31,9 +32,11 @@ class AdminPage(BasePage):
     def __init__(self, browser):
         super().__init__(browser)
 
+    @allure.step
     def open_admin_page(self):
         self.browser.get(self.browser.url + "/admin")
 
+    @allure.step
     def login(self):
         self._element(self.ADMIN_USERNAME).clear()
         self._element(self.ADMIN_PASSWORD).clear()
@@ -42,10 +45,12 @@ class AdminPage(BasePage):
         self._element(self.ADMIN_PASSWORD).send_keys(self.PASSWORD)
         self._element(self.LOGIN_BUTTON).click()
 
+    @allure.step
     def choose_product_catalog(self):
         self._element(self.CATALOG).click()
         self._element(self.PRODUCTS_TAB).click()
 
+    @allure.step
     def create_new_product(self):
         self._element(self.ADD_NEW_PRODUCT_BUTTON).click()
 
@@ -53,19 +58,24 @@ class AdminPage(BasePage):
     def check_alert_text(self):
         return self._element(self.SUCCESS_ALERT).text.split("\n")[0]
 
+    @allure.step
     def find_created_product(self):
         self._element(self.PRODUCT_NAME_FILTER).send_keys("TEST_PRODUCT")
         self._element(self.FILTER_BUTTON).click()
 
+    @allure.step
     def check_filter_result(self):
         self._element(self.FILTER_RESULT)
 
+    @allure.step
     def select_all_products(self):
         self._element(self.SELECT_ALL_CHECK_BOXES).click()
 
+    @allure.step
     def press_delete_button(self):
         self._element(self.DELETE_BUTTON).click()
 
+    @allure.step
     def delete_created_product(self):
         self.check_filter_result()
         self.select_all_products()

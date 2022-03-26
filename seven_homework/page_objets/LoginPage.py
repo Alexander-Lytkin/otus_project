@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-from five_homework.page_objets.BasePage import BasePage
+from seven_homework.page_objets.BasePage import BasePage
 
 
 class LoginAdminPage(BasePage):

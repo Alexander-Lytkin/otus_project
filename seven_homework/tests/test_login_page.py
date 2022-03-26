@@ -1,9 +1,11 @@
+import allure
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from five_homework.page_objets.LoginPage import LoginAdminPage
+from seven_homework.page_objets.LoginPage import LoginAdminPage
 
 
+@allure.title("Проверка наличия элементов страницы для входа")
 def test_check_admin_page_elements(browser):
     browser.get(browser.url + "/admin/")
     wait = WebDriverWait(browser, 5)

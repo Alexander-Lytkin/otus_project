@@ -1,9 +1,11 @@
+import allure
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from five_homework.page_objets.DashboardPage import DashboardPage
+from seven_homework.page_objets.DashboardPage import DashboardPage
 
 
+@allure.title("Проверка наличия элементов страницы витрины")
 def test_check_dashboard_page_elements(browser):
     browser.get(browser.url + "/index.php?route=product/category&path=20_27")
     wait = WebDriverWait(browser, 5)

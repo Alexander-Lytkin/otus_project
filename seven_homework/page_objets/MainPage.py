@@ -1,6 +1,7 @@
+import allure
 from selenium.webdriver.common.by import By
 
-from five_homework.page_objets.BasePage import BasePage
+from seven_homework.page_objets.BasePage import BasePage
 
 
 class MainPage(BasePage):
@@ -26,6 +27,7 @@ class MainPage(BasePage):
         element = self._element(self.CURRENCY)
         return element
 
+    @allure.step
     def choose_currency(self, currency):
         element = self.currency_button
         element.click()

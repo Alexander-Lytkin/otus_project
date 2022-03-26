@@ -1,8 +1,11 @@
-from five_homework.page_objets.MainPage import MainPage
-from five_homework.page_objets.RegistrationPage import RegistrationPage
-from five_homework.page_objets.elements.SuccessLogin import SuccessRegistrationPage
+import allure
+
+from seven_homework.page_objets.MainPage import MainPage
+from seven_homework.page_objets.RegistrationPage import RegistrationPage
+from seven_homework.page_objets.elements.SuccessLogin import SuccessRegistrationPage
 
 
+@allure.title("Создание нового аккаунта")
 def test_registration_new_account(browser):
     registration_page = RegistrationPage(browser)
     registration_page.open_registration_card()
@@ -13,6 +16,7 @@ def test_registration_new_account(browser):
     assert success_reg_page.check_success_registration_account().text == "Your Account Has Been Created!"
 
 
+@allure.title("Смена валюты на главной странице")
 def test_change_currency(browser):
     main_page = MainPage(browser)
     main_page.choose_currency("€ Euro")
