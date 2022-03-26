@@ -15,3 +15,9 @@ pre-commit install
  docker kill {id контейнера} - убить\остановить контейнер
  docker system prune - удалить все не используемые контейнеры
 ```
+
+# Локальный IP адрес для запуска тестов в контейнере
+
+```bash
+ pytest test_example.py --url http://127.0.1.0/
+```

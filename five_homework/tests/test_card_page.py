@@ -1,7 +1,7 @@
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from five_homework.pages.CardPage import CardPage
+from five_homework.page_objets.CartPage import CardPage
 
 
 def test_check_card_page_elements(browser):

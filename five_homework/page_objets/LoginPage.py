@@ -1,7 +1,10 @@
 from selenium.webdriver.common.by import By
 
+from five_homework.page_objets.BasePage import BasePage
 
-class LoginAdminPage:
+
+class LoginAdminPage(BasePage):
+
     LOGO = (By.XPATH, "//*[@id='header-logo']")
     PANEL_TITLE = (By.XPATH, "//*[@class='panel-title']")
     INPUT_USERNAME = (By.ID, "input-username")

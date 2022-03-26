@@ -1,4 +1,4 @@
-from five_homework.pages.MainPage import MainPage
+from five_homework.page_objets.MainPage import MainPage
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
