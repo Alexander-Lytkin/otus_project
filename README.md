@@ -21,3 +21,11 @@ pre-commit install
 ```bash
  pytest test_example.py --url http://127.0.1.0/
 ```
+
+# Задание 9
+Необходимо выполнить скрипт
+По умолчанию уже используется путь файла для лога "/home/al/PycharmProjects/OTUS/otus_project/nine_homework/logs/"
+```bash
+ python3 readlog.py 
+ python3 readlog.py -path "/home/al/PycharmProjects/OTUS/otus_project/nine_homework/logs/"
+```
