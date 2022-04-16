@@ -1,13 +1,14 @@
 import allure
+import pytest
 
 from seven_homework.page_objets.ProductCard import ProductCard
 
 
 @allure.title("Добавление нового товара в разделе администратора.")
+@pytest.mark.skip(reason="use only with local opencard")
 def test_add_new_item(browser, admin_page):
     admin_page.choose_product_catalog()
     admin_page.create_new_product()
-
     product_page = ProductCard(browser)
     product_page.fill_product_name()
     product_page.fill_model_name()
@@ -16,6 +17,7 @@ def test_add_new_item(browser, admin_page):
 
 
 @allure.title("Удаление товара из списка в разделе администратора")
+@pytest.mark.skip(reason="use only with local opencard")
 def test_remove_product(browser, admin_page):
     admin_page.choose_product_catalog()
     admin_page.find_created_product()
