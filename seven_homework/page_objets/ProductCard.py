@@ -1,5 +1,4 @@
 from selenium.webdriver.common.by import By
-
 from seven_homework.page_objets.AdminPage import AdminPage
 
 

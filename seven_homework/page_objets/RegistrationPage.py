@@ -1,6 +1,5 @@
 import allure
 from selenium.webdriver.common.by import By
-
 from seven_homework.common.random import *
 from seven_homework.page_objets.BasePage import BasePage
 

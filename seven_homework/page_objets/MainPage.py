@@ -1,6 +1,5 @@
 import allure
 from selenium.webdriver.common.by import By
-
 from seven_homework.page_objets.BasePage import BasePage
 
 
@@ -8,6 +7,7 @@ class MainPage(BasePage):
     CURRENCY = (By.XPATH, "//*[contains(text(), 'Currency')]")
     CURRENT_CURRENCY = (By.XPATH, "//*[@class='btn btn-link dropdown-toggle']")
     CURRENCY_LIST = (By.XPATH, "//*[@class='currency-select btn btn-link btn-block']")
+    TITLE = (By.TAG_NAME, "//title")
 
     def __init__(self, browser):
         super().__init__(browser)
