@@ -17,7 +17,8 @@ class LogReader:
 		self.ALL_REQUESTS = None
 		self.parse_args = parse_args
 		self.file_path = ""
-		self.filename = "file_" + str(self.counter) + "_" + datetime.now().strftime('%d-%m-%Y-%H:%M.json')
+		self.log_name = ""
+		self.file_name = ""
 	
 	def dir_checker(self):
 		if os.path.isdir(self.parse_args.path):
@@ -25,16 +26,24 @@ class LogReader:
 			FILE_EXE = r".log"
 			self.file_path = [_ for _ in os.listdir(FILE_DIR) if _.endswith(FILE_EXE)]
 		else:
+			log_name = os.path.basename(self.parse_args.path)
+			self.log_name = log_name.split(".")[0]
+			self.name_file_result()
 			self.file_path = self.parse_args.path
+	
+	def name_file_result(self):
+		self.file_name = self.log_name + "-" + str(self.counter) + "_" + datetime.now().strftime('%d-%m-%Y-%H:%M.json')
 	
 	def run_file(self):
 		if isinstance(self.file_path, str):
 			self.runner()
 		else:
-			for _ in self.file_path:
+			for file_name in self.file_path:
+				self.log_name = file_name.split(".")[0]
 				self.counter += 1
-				self.filename = "file_" + str(self.counter) + "_" + datetime.now().strftime('%d-%m-%Y-%H:%M.json')
-				self.file_path = self.parse_args.path + _
+				self.log_name = self.log_name
+				self.file_path = self.parse_args.path + file_name
+				self.name_file_result()
 				self.runner()
 	
 	def runner(self):
@@ -65,8 +74,9 @@ class LogReader:
 					self.LONG_REQUEST[data] = long_req_key
 	
 	def head_request_counter(self):
-		for request in ["GET", "HEAD /", "POST", "PUT /", "DELETE", "CONNECT", "OPTIONS", "TRACE", "PATCH"]:
-			res = subprocess.run([f'grep -c "{request}" {self.file_path}'], shell=True, capture_output=True)
+		for request in ["GET", "HEAD", "POST", "PUT", "DELETE", "CONNECT", "OPTIONS", "TRACE", "PATCH"]:
+			command = f"grep -c '\"{request}' {self.file_path}"
+			res = subprocess.run([command], shell=True, capture_output=True)
 			
 			value = res.stdout.decode('utf-8').strip("\n")
 			key = request.strip(" /")
@@ -91,7 +101,7 @@ class LogReader:
 			}]
 		}
 		
-		with open(self.filename, 'w', encoding="utf-8") as file:
+		with open(self.file_name, 'w', encoding="utf-8") as file:
 			json.dump(all_dict, file, ensure_ascii=False, indent=4)
 		
 		print(all_dict)
