@@ -17,6 +17,8 @@ def pytest_addoption(parser):
 	parser.addoption("--bversion", default=None)
 	parser.addoption("--vnc", default=False)
 	parser.addoption("--log_level", action="store", default="DEBUG")
+	parser.addoption("--drivers", action="store",
+	                 default=os.path.expanduser("~/PycharmProjects/OTUS/otus_project/seven_homework/drivers"))
 
 
 @pytest.fixture
@@ -27,6 +29,7 @@ def browser(request):
 	version = request.config.getoption("--bversion")
 	vnc = request.config.getoption("--vnc")
 	log_level = request.config.getoption("--log_level")
+	drivers = request.config.getoption("--drivers")
 	
 	logger = logging.getLogger('driver')
 	test_name = request.node.name
@@ -35,7 +38,7 @@ def browser(request):
 	
 	if executor == "local":
 		caps = {'goog:chromeOptions': {}}
-		driver = webdriver.Chrome(desired_capabilities=caps)
+		driver = webdriver.Chrome(desired_capabilities=caps, executable_path=drivers + "/chromedriver")
 	else:
 		executor_url = f"http://{executor}:4444/wd/hub"
 		
@@ -56,9 +59,9 @@ def browser(request):
 			command_executor=executor_url,
 			desired_capabilities=caps
 		)
-		driver.maximize_window()
-		driver.get(url)
-		driver.url = url
+	driver.maximize_window()
+	driver.get(url)
+	driver.url = url
 	
 	# driver = EventFiringWebDriver(driver, MyListener())
 	driver.test_name = test_name
