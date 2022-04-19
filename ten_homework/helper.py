@@ -1,15 +1,9 @@
-
-import logging
-from server_echo import HTTPServer
+import socket
 
 
-logging.basicConfig(level=logging.INFO)
-
-
-if __name__ == '__main__':
-    logger = logging.getLogger("Server")
-    try:
-        print("Enter \\c to stop")
-        HTTPServer(('localhost', 5000)).run()
-    except KeyboardInterrupt:
-        logger.info("Stop")
+def get_open_port():
+    with socket.socket() as s:
+        s.bind(('', 0))
+        s.listen(1)
+        port = s.getsockname()[1]
+    return port
