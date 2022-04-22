@@ -9,8 +9,6 @@ from datetime import datetime
 class LogReader:
 	def __init__(self, parse_args):
 		self.counter = 0
-		self.long_request = None
-		self.ip_address_list = None
 		self.REQUEST_COUNTER = {}
 		self.IP_LIST = []
 		self.LONG_REQUEST = {}
@@ -25,6 +23,7 @@ class LogReader:
 			FILE_DIR = parser_args.path
 			FILE_EXE = r".log"
 			self.file_path = [_ for _ in os.listdir(FILE_DIR) if _.endswith(FILE_EXE)]
+			self.file_path.reverse()
 		else:
 			log_name = os.path.basename(self.parse_args.path)
 			self.log_name = log_name.split(".")[0]
@@ -50,8 +49,9 @@ class LogReader:
 		self.request_counter()
 		self.read_log_file()
 		self.head_request_counter()
-		self.most_common_ip_counter()
-		self.create_report()
+		ip = self.most_common_ip_counter()
+		long_request = self.long_request()
+		self.create_report(ip_address_list=ip, long_request=long_request)
 	
 	def request_counter(self):
 		res = subprocess.run([f"wc -l < {self.file_path}"], shell=True, capture_output=True)
@@ -60,6 +60,8 @@ class LogReader:
 	
 	def read_log_file(self):
 		with open(f"{self.file_path}") as f:
+			if self.IP_LIST is not []:
+				self.IP_LIST = []
 			res = subprocess.run([f"wc -l < {self.file_path}"], shell=True, capture_output=True)
 			self.ALL_REQUESTS = res.stdout.decode('utf-8').strip("\n")
 			
@@ -83,21 +85,24 @@ class LogReader:
 			self.REQUEST_COUNTER.update({key: value})
 	
 	def most_common_ip_counter(self):
-		most_common = Counter(self.IP_LIST).most_common(3)
-		self.ip_address_list = []
-		for i in most_common:
-			self.ip_address_list.append(i[0])
-		
-		item = OrderedDict(sorted(self.LONG_REQUEST.items(), key=lambda x: int(x[1])))
-		self.long_request = list(item)[-3:]
+		common = Counter(self.IP_LIST).most_common(3)
+		ip_address_list = []
+		for i in common:
+			ip_address_list.append(i[0])
+		return ip_address_list
 	
-	def create_report(self):
+	def long_request(self):
+		item = OrderedDict(sorted(self.LONG_REQUEST.items(), key=lambda x: int(x[1])))
+		long_request = list(item)[-3:]
+		return long_request
+
+	def create_report(self, ip_address_list, long_request):
 		all_dict = {'Отчёт':
 			[{
 				'Общее количество выполненных запросов': f"{self.ALL_REQUESTS}",
 				'Количество запросов по HTTP-методам': f"{self.REQUEST_COUNTER}",
-				'Топ 3 IP адресов': f"{self.ip_address_list}",
-				'Топ 3 самых долгих запросов': f"{self.long_request}",
+				'Топ 3 IP адресов': f"{ip_address_list}",
+				'Топ 3 самых долгих запросов': f"{long_request}",
 			}]
 		}
 		
