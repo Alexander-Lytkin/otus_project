@@ -1,60 +1,64 @@
 import socket
-from helper import get_open_port
-# создаемTCP/IP сокет
 from http import HTTPStatus
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-port = get_open_port()
-# Привязываем сокет к порту
-server_address = ('localhost', port)
-print('Старт сервера на {} порт {}'.format(*server_address))
-sock.bind(server_address)
+from ten_homework.helper import get_open_port
 
-# Слушаем входящие подключения
-sock.listen(1)
+HOST = "localhost"
+PORT = get_open_port()
 
-while True:
-    # ждем соединения
-    print('Ожидание соединения...')
-    connection, client_address = sock.accept()
-    print('Подключено к:', client_address)
-    # Принимаем данные порциями и ретранслируем их
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    print(f"Старт сервера на {HOST}:{PORT}")
+    s.bind((HOST, PORT))
+    s.listen(1)
+    
     while True:
-        data = connection.recv(1024)
-        print(f'Получено: {data.decode()}')
+        print('Ожидание соединения...')
+        conn, address = s.accept()
+        print("Подключено к:", address)
+        
+        data = conn.recv(1024)
+        print(f"Получено: \n{data}\n")
+        data = data.decode("utf-8").strip()
         
         status_value = 200
-        status_name = "OK"
-        
+        status_phrase = "OK"
         if data:
-            print('Обработка данных...')
-            text = data.decode('utf-8')
             try:
-                status = text.split()[1]
-                if status.isdigit() and status != " " or status == "/":
-                    status_value, status_name = HTTPStatus(int(status)).value, HTTPStatus(int(status)).name
+                print('Обработка данных...')
+                status = data.split()[1].split("/?status=")
+                if len(status) == 2:
+                    status_code = int(status[1].split()[0])
+                    stat = HTTPStatus(status_code)
+                    status_value = status_code
+                    status_phrase = stat.phrase
             except (ValueError, IndexError):
                 pass
-        
-            data = data.split()[2].decode('utf-8')
-            status_line = f"{data} {status_value} {status_name}"
-            print('Отправка обратно клиенту.')
-            body = '<h1>Hello from OTUS!</h1>'
-            headers = '\r\n'.join([
-                status_line,
-                'Content-Type: text/html; charset=UTF-8',
-                f'Content-Length: {len(body)}'
+            
+            # Тело ответа
+            resp = "\r\n".join(data.split("\r\n")[1:])
+            body = "\r\n".join([
+                f"Request Method: {data.split()[0]}",
+                f"Request Source: {address}",
+                f"Response Status: {status_value} {status_phrase}",
+                resp
             ])
-            resp = '\r\n\r\n'.join([
+            # Заголовки ответа
+            status_line = f"{data.split()[2]} {status_value} {status_phrase}"
+            headers = "\r\n".join([
+                status_line,
+                f"Content-Type: text/plain",
+                f"Content-Length: {len(body)}"
+            ])
+            # Ответ от сервера
+            message = "\r\n\r\n".join([
                 headers,
                 body
-            ])
+            ]).encode("utf-8")
             
-            sent_bytes = connection.send(
-                    resp.encode("utf-8")
-                )
+            print('Отправка обратно клиенту.')
+            conn.send(message)
         else:
-            print('Нет данных от:', client_address)
+            print('Нет данных от:', address)
             break
-            # Очищаем соединение
-            connection.close()
+        # Очищаем соединение
+        conn.close()
