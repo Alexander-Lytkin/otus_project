@@ -1,6 +1,5 @@
 from selenium.webdriver.common.by import By
-
-from five_homework.page_objets.AdminPage import AdminPage
+from seven_homework.page_objets.AdminPage import AdminPage
 
 
 class ProductCard(AdminPage):

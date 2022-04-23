@@ -21,3 +21,16 @@ pre-commit install
 ```bash
  pytest test_example.py --url http://127.0.1.0/
 ```
+
+# Selenoid запуск/остановка
+
+```bash
+выполнить {binary_name} selenoid start/stop
+```
+
+# Генерация отчетов allure 
+
+```bash
+выполнить находясь в директории с тестами, генерация отчета и открытие его в html странице
+allure generate -c && allure open
+```
