@@ -7,7 +7,7 @@ import mysql.connector
 import pytest
 from selenium import webdriver
 
-from tests.page_objets.AdminPage import AdminPage
+from page_objets.AdminPage import AdminPage
 
 
 def pytest_addoption(parser):
@@ -42,7 +42,7 @@ def browser(request):
 	else:
 		executor_url = f"http://{executor}:4444/wd/hub"
 		
-		caps = {
+		kwarg = {
 			"browserName": browser,
 			"browserVersion": version,
 			"screenResolution": "1280x720",
@@ -57,17 +57,16 @@ def browser(request):
 		}
 		driver = webdriver.Remote(
 			command_executor=executor_url,
-			desired_capabilities=caps
+			desired_capabilities=kwarg,
 		)
 	driver.maximize_window()
 	driver.get(url)
 	driver.url = url
 	
-	# driver = EventFiringWebDriver(driver, MyListener())
 	driver.test_name = test_name
 	driver.log_level = log_level
 	
-	logger.info("Browser:{}".format(browser, driver.desired_capabilities))
+	logger.info("Browser: {}".format(driver.capabilities))
 	
 	def fin():
 		driver.quit()
