@@ -84,7 +84,7 @@ def get_environment(pytestconfig):
 		'Stand': 'Production',
 		'Shell': os.getenv('SHELL')
 	}
-	
+
 	tests_root = pytestconfig.rootdir
 	with open(f'{tests_root}/allure-results/environment.properties', 'w') as f:
 		env_props = '\n'.join([f'{k}={v}' for k, v in props.items()])

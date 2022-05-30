@@ -1,7 +1,7 @@
 import allure
 import pytest
 
-from seven_homework.page_objets.ProductCard import ProductCard
+from page_objets.ProductCard import ProductCard
 
 
 @allure.title("Добавление нового товара в разделе администратора.")
@@ -27,3 +27,4 @@ def test_remove_product(browser, admin_page):
 
     product_page = ProductCard(browser)
     assert product_page.check_empty_product_list() == "No results!"
+    

@@ -7,7 +7,7 @@ from page_objets.DashboardPage import DashboardPage
 
 
 @allure.title("Проверка наличия элементов страницы витрины")
-@pytest.mark.skip(reason="use only with web opencard")
+# @pytest.mark.skip(reason="use only with web opencard")
 def test_check_dashboard_page_elements(browser):
     browser.get(browser.url + "/index.php?route=product/category&path=20_27")
     wait = WebDriverWait(browser, 5)

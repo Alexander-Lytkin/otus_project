@@ -1,8 +1,8 @@
 import allure
 
-from seven_homework.page_objets.MainPage import MainPage
-from seven_homework.page_objets.RegistrationPage import RegistrationPage
-from seven_homework.page_objets.elements.SuccessLogin import SuccessRegistrationPage
+from page_objets.MainPage import MainPage
+from page_objets.RegistrationPage import RegistrationPage
+from page_objets.elements.SuccessLogin import SuccessRegistrationPage
 
 
 @allure.title("Создание нового аккаунта")
