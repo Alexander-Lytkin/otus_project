@@ -34,3 +34,10 @@ pre-commit install
 выполнить находясь в директории с тестами, генерация отчета и открытие его в html странице
 allure generate -c && allure open
 ```
+
+
+# Запуск jenkins
+
+```
+docker run -p 8080:8080 -p 50000:50000 jenkins/jenkins:lts
+```
